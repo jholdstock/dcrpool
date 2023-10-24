@@ -333,7 +333,12 @@ func (pm *PaymentMgr) payPerShare(source *PaymentSource, amt dcrutil.Amount, hei
 	if err != nil {
 		return err
 	}
-	for _, payment := range payments {
+
+	count := len(payments)
+	log.Debugf("Calculated %d payments for block %d (PPS)", count, height)
+
+	for i, payment := range payments {
+		log.Debugf("Payment %d/%d: %s", i+1, count, payment)
 		err := pm.cfg.db.PersistPayment(payment)
 		if err != nil {
 			return err
@@ -360,7 +365,12 @@ func (pm *PaymentMgr) payPerLastNShares(source *PaymentSource, amt dcrutil.Amoun
 	if err != nil {
 		return err
 	}
-	for _, payment := range payments {
+
+	count := len(payments)
+	log.Debugf("Calculated %d payments for block %d (PPLNS)", count, height)
+
+	for i, payment := range payments {
+		log.Debugf("Payment %d/%d: %s", i+1, count, payment)
 		err := pm.cfg.db.PersistPayment(payment)
 		if err != nil {
 			return err

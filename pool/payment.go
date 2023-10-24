@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/hex"
+	"fmt"
 	"time"
 
 	"github.com/decred/dcrd/dcrutil/v4"
@@ -31,6 +32,11 @@ type Payment struct {
 	TransactionID     string         `json:"transactionid"`
 
 	Source *PaymentSource `json:"source"`
+}
+
+func (p *Payment) String() string {
+	return fmt.Sprintf("%s to %s (uuid=%s, source=%s)",
+		p.Amount, p.Account, p.UUID, p.Source.BlockHash)
 }
 
 // paymentID generates a unique id using the provided payment details and a
